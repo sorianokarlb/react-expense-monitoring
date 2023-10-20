@@ -10,6 +10,11 @@ function Login(){
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        console.log(email,password)
+    }
+
 
     return (
         <div className="flex items-center justify-center h-screen">
@@ -40,18 +45,24 @@ function Login(){
                         type="email" 
                         label={<span className="text-indigo-500">Email</span>} 
                         value={email}
+                        onChange={ (e) => setEmail(e.target.value)}
                         />
                         <Input 
                         className="border-2 border-indigo-300 rounded-xl text-indigo-500" 
                         type="password" 
                         label={<span className="text-indigo-500">Password</span>} 
                         value={password}
+                        onChange={(e)=> setPassword(e.target.value)}
                         />
-                        <Button className="bg-indigo-500 hover:bg-indigo-400 text-slate-300 text-lg" variant="solid">Login</Button>
+                        <Button 
+                        className="bg-indigo-500 hover:bg-indigo-400 text-slate-300 text-lg" 
+                        variant="solid"
+                        onClick={submitHandler}
+                        >Login</Button>
                     </div>
                 </CardBody>
-                <CardFooter className="flex flex-col items-center justify-center gap-4">
-                    <Link href="#">Register</Link>
+                <CardFooter className="flex items-center justify-center">
+                <span className="text-xs">Already have an account ?</span><Link href="/register">Register</Link>
                 </CardFooter>
                 </div>
                 
