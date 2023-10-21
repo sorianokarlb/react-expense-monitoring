@@ -10,6 +10,8 @@ export default {
     extend: {},
     fontFamily: {
       'sans': 'Helvetica, Arial, sans-serif',
+      'GrandHotel': 'Grand Hotel',
+      'Gabarito': 'Gabarito'
     },
   },
   darkMode: "class",

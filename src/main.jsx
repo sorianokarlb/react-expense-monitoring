@@ -8,12 +8,14 @@ import App from './App.jsx'
 import './assets/index.css'
 import Login from './views/Login.jsx';
 import Register from './views/Registration.jsx';
-
+import Dashboard from './views/Dashboard.jsx';
+import '@icon-park/react/styles/index.css';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<Login />} />
       <Route index={false} path='/register' element={<Register />} />
+      <Route index={false} path='/dashboard' element={<Dashboard />} />
     </Route>
   )
 )
