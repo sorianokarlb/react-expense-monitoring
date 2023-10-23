@@ -5,38 +5,8 @@ import {Image} from "@nextui-org/image";
 function Sidebar() {
  return (
     <Card className="mt-10 ml-8 w-60 h-[50em] p-[.9em] font-Gabarito opacity-75">
-        <CardHeader className="flex justify-center">
-        <Image
-                alt="nextui logo"
-                height={80}
-                radius="sm"
-                src="src/assets/images/logo.png"
-                width={50}
-                />
-                <span className="font-GrandHotel text-xl font-semibold subpixel-antialiased italic decoration-2 text-indigo-500">Expense.</span>
-        </CardHeader>
-        <Divider className="" />
-        <CardBody className="">
-            <Listbox
-            aria-label="Listbox Variants"
-            color="secondary"
-            variant="flat"
-            >
-                <ListboxItem key="dashboard" startContent={<AllApplication theme="outline" size="20" className="secondary"/>}>
-                    <span className="text-base">Dashboard</span>
-                </ListboxItem>
-                <ListboxItem key="bills" startContent={<Bill theme="outline" size="20" className="secondary"/>}>Bills & Payments</ListboxItem>
-                <ListboxItem key="expenses" startContent={<ChartLineArea theme="outline" size="20" className="secondary"/>}>Expenses</ListboxItem>
-                <ListboxItem key="savings" startContent={<WalletOne theme="outline" size="20" className="secondary"/>}>Savings</ListboxItem>
-                <ListboxItem key="savings" startContent={<Setting theme="outline" size="20" className="secondary"/>}>Settings</ListboxItem>
-                {/* <ListboxItem key="delete" className="text-danger" color="danger">
-                    Delete file
-                </ListboxItem> */}
-            </Listbox>
-        </CardBody>
-
-        <CardFooter>
-            <Dropdown placement="bottom-end">
+        <CardHeader className="flex flex-row gap-3">
+        <Dropdown placement="bottom-end">
                         <DropdownTrigger>
                             <Avatar
                                 isBordered
@@ -62,6 +32,38 @@ function Sidebar() {
                             <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
                         </DropdownMenu>
             </Dropdown>
+            <span className="text-medium font-black">Hello, Bugok</span>
+        
+        </CardHeader>
+        <Divider className="" />
+        <CardBody className="">
+            <Listbox
+            aria-label="Listbox Variants"
+            color="secondary"
+            variant="flat"
+            >
+                <ListboxItem key="dashboard" startContent={<AllApplication theme="outline" size="20" className="secondary"/>}>
+                    <span className="text-base">Dashboard</span>
+                </ListboxItem>
+                <ListboxItem key="bills" startContent={<Bill theme="outline" size="20" className="secondary"/>}>Bills & Payments</ListboxItem>
+                <ListboxItem key="expenses" startContent={<ChartLineArea theme="outline" size="20" className="secondary"/>}>Expenses</ListboxItem>
+                <ListboxItem key="savings" startContent={<WalletOne theme="outline" size="20" className="secondary"/>}>Savings</ListboxItem>
+                <ListboxItem key="savings" startContent={<Setting theme="outline" size="20" className="secondary"/>}>Settings</ListboxItem>
+                {/* <ListboxItem key="delete" className="text-danger" color="danger">
+                    Delete file
+                </ListboxItem> */}
+            </Listbox>
+        </CardBody>
+
+        <CardFooter className="flex justify-center">
+            <Image
+            alt="nextui logo"
+            height={80}
+            radius="sm"
+            src="src/assets/images/logo.png"
+            width={50}
+            />
+            <span className="font-GrandHotel text-xl font-semibold subpixel-antialiased italic decoration-2 text-indigo-500">Expense.</span>
         </CardFooter>
 
     </Card>
