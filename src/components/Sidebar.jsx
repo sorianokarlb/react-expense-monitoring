@@ -1,8 +1,31 @@
 // nextui
-import {Card, CardBody, CardHeader, CardFooter ,Divider, Listbox, ListboxItem, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
+import {Card, CardBody, CardHeader, CardFooter ,Divider, Listbox, ListboxItem, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, useSelect} from "@nextui-org/react";
 import {AllApplication, Bill, ChartLineArea, WalletOne, Setting} from '@icon-park/react'
 import {Image} from "@nextui-org/image";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLogoutMutation } from '../slices/usersApiSlice.js';
+import { clearCredentials } from "../slices/authSlice.js";
+
 function Sidebar() {
+    const { userInfo } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [logoutAPICall] = useLogoutMutation();
+
+    const logoutHandler = async () => {
+        try {
+            await logoutAPICall().unwrap();
+            dispatch(clearCredentials());
+            navigate('/');
+        } catch (err) {
+            toast.error(err.data.message)
+        }
+    }
  return (
     <Card className="mt-10 ml-8 w-60 h-[50em] p-[.9em] font-Gabarito opacity-75">
         <CardHeader className="flex flex-row gap-3">
@@ -29,10 +52,11 @@ function Sidebar() {
                             <DropdownItem key="system">System</DropdownItem>
                             <DropdownItem key="configurations">Configurations</DropdownItem>
                             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-                            <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
+                            <DropdownItem key="logout" color="danger" onClick={ logoutHandler }>Log Out</DropdownItem>
                         </DropdownMenu>
             </Dropdown>
-            <span className="text-medium font-black">Hello, Bugok</span>
+            { userInfo ? (<span className="text-medium font-black">Hello, {userInfo.firstname}</span>) : (<span className="text-medium font-black">Hello, User not found</span>)}
+            
         
         </CardHeader>
         <Divider className="" />

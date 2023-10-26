@@ -3,16 +3,41 @@ import {Image} from "@nextui-org/image";
 import {Input} from "@nextui-org/input";
 import {Button} from "@nextui-org/button";
 import {Link} from "@nextui-org/link";
+import {Spinner} from "@nextui-org/react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {useLoginMutation} from "../slices/usersApiSlice.js";
+import { setCredentials } from "../slices/authSlice.js";
+import { toast } from 'react-toastify';
 function Login(){
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [login, { isLoading }] = useLoginMutation()
+
+    const { userInfo } = useSelector((state) => state.auth)
+
+    useEffect(()=>{
+        if(userInfo){
+            navigate('/dashboard');
+        }
+    }, [navigate,userInfo])
+
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(email,password)
+        try {
+            const res = await login({ email, password }).unwrap();
+            dispatch(setCredentials({...res}))
+            navigate('/dashboard');
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
     }
 
 
@@ -58,7 +83,7 @@ function Login(){
                         className="bg-indigo-500 hover:bg-indigo-400 text-slate-300 text-lg" 
                         variant="solid"
                         onClick={submitHandler}
-                        >Login</Button>
+                        >{ isLoading ? <Spinner /> : 'Login'}</Button>
                     </div>
                 </CardBody>
                 <CardFooter className="flex items-center justify-center">

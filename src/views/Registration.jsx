@@ -3,8 +3,15 @@ import {Image} from "@nextui-org/image";
 import {Input} from "@nextui-org/input";
 import {Button} from "@nextui-org/button";
 import {Link} from "@nextui-org/link";
+import {Spinner} from "@nextui-org/react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
+import { useRegisterMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
 
 function Register() {
 
@@ -16,7 +23,20 @@ function Register() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    const handleInputName = (e, field) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { userInfo } = useSelector((state) => state.auth)
+
+    const [register, { isLoading }] = useRegisterMutation()
+
+    useEffect(()=>{
+        if(userInfo){
+            navigate('/');
+        }
+    }, [navigate,userInfo])
+
+    const handleInputName = async (e, field) => {
         e.preventDefault();
         setName((prevName) => ({
             ...prevName,
@@ -24,10 +44,15 @@ function Register() {
         }))
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(name.firstname,name.middlename,name.lastname)
-        console.log(email,password)
+        try {
+            const res = await register({ ...name, email, password }).unwrap();
+            dispatch(setCredentials({...res}));
+            navigate('/');
+        } catch (error) {
+            toast.error(err?.data?.message || err.error);
+        }
     }
 
     return (
@@ -88,7 +113,7 @@ function Register() {
                             className="bg-indigo-500 hover:bg-indigo-400 text-slate-300 text-lg" 
                             variant="solid"
                             onClick={submitHandler}
-                            >Submit</Button>
+                            >{ isLoading ? <Spinner /> : 'Submit'}</Button>
                         </div>
                     </CardBody>
                     <CardFooter className="flex items-center justify-center gap-1">
