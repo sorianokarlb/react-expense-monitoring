@@ -18,7 +18,7 @@ function Dashboard () {
                 <Sidebar />
                 <Card className="mt-10 w-[80em] h-[50em] p-[.9em] font-Gabarito opacity-75">
                     <CardBody className="flex flex-col">
-                        <div className="flex flex-row gap-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2">
                             <TopCard title={'Foods'} price={'420'}/>
                             <TopCard title={'Bills & Payments'} price={'420'}/>
                             <TopCard title={'Expenses'} price={'420'}/>

@@ -72,7 +72,7 @@ function Sidebar() {
                 <ListboxItem key="bills" startContent={<Bill theme="outline" size="20" className="secondary"/>}>Bills & Payments</ListboxItem>
                 <ListboxItem key="expenses" startContent={<ChartLineArea theme="outline" size="20" className="secondary"/>}>Expenses</ListboxItem>
                 <ListboxItem key="savings" startContent={<WalletOne theme="outline" size="20" className="secondary"/>}>Savings</ListboxItem>
-                <ListboxItem key="savings" startContent={<Setting theme="outline" size="20" className="secondary"/>}>Settings</ListboxItem>
+                <ListboxItem key="settings" startContent={<Setting theme="outline" size="20" className="secondary"/>}>Settings</ListboxItem>
                 {/* <ListboxItem key="delete" className="text-danger" color="danger">
                     Delete file
                 </ListboxItem> */}
