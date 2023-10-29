@@ -1,8 +1,47 @@
 import {Card, CardBody, CardHeader, CardFooter ,Divider, Button} from "@nextui-org/react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input, Select, SelectItem} from "@nextui-org/react";
 import {Add} from '@icon-park/react'
+
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
+import { useAddTrans } from '../slices/transApiSlice';
+import { setTransaction } from "../slices/transSlice";
+
 function TransactionBar() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [transData, setTrans ] = useState({
+        transactionName: '',
+        transactionType: '',
+        transactionPrice: 0,
+        addedBy: 'Karl'
+    })
+
+    const handleInputTrans = async (e,field) => {
+
+        setTrans((prevData) => ({
+            ...prevData,
+            [field]: e.target.value
+        }))
+
+    }
+
+    const [addTrans, { isLoading }] = useAddTrans()
+
+    const addHandler = async (e) => {
+        try {
+            const res = await addTrans({ ...transData }).unwrap();
+            dispatch(setTransaction({...res}));
+        } catch (err) {
+            toast.error(err?.data?.message || err.error);
+        }
+    }
 
     return (
         <>
@@ -33,14 +72,18 @@ function TransactionBar() {
                         label="Transaction Name"
                         labelPlacement={'outside'}
                         placeholder="Enter Transaction Name"
+                        onChange={(e) => handleInputTrans(e, 'transactionName')}
                         />
                         <Select
                         labelPlacement={'outside'}
                         label="Transaction Type"
                         placeholder="Select an Transaction Type"
                         className="max-w-xs"
+                        onSelect={(e) => handleInputTrans(e, 'transactionType')}
                         >
-                            <SelectItem key={'Bills'} value={'Bills'}>Bills</SelectItem>
+                            <SelectItem key={'Bills'} value={'Bills'}>Bills & Payments</SelectItem>
+                            <SelectItem key={'Bills'} value={'Bills'}>Expenses</SelectItem>
+                            <SelectItem key={'Bills'} value={'Bills'}>Savings</SelectItem>
                         </Select>
                         <Input
                         key={'outside'}
@@ -48,13 +91,14 @@ function TransactionBar() {
                         label="Transaction Price"
                         labelPlacement={'outside'}
                         placeholder="Enter Transaction Price"
+                        onChange={(e) => handleInputTrans(e, 'transactionPrice')}
                         />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" variant="light" onPress={onClose}>
                         Close
                         </Button>
-                        <Button color="secondary" variant="flat" onPress={onClose}>
+                        <Button color="secondary" variant="flat" onPress={addHandler}>
                         Action
                         </Button>
                     </ModalFooter>
