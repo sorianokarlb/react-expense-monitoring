@@ -9,9 +9,6 @@ const store = configureStore({
             [apiSlice.reducerPath]: apiSlice.reducer,
             trans: transReducer,
             [apiTransSlice.reducerPath]: apiTransSlice.reducer,
-
-
-
         },
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiTransSlice.middleware),

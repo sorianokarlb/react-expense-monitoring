@@ -2,6 +2,7 @@
 import {Card, CardBody, CardHeader, CardFooter ,Divider, Listbox, ListboxItem, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, useSelect} from "@nextui-org/react";
 import {AllApplication, Bill, ChartLineArea, WalletOne, Setting} from '@icon-park/react'
 import {Image} from "@nextui-org/image";
+import { toast } from 'react-toastify';
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -23,7 +24,7 @@ function Sidebar() {
             dispatch(clearCredentials());
             navigate('/');
         } catch (err) {
-            toast.error(err.data.message)
+            console.log(err)
         }
     }
  return (

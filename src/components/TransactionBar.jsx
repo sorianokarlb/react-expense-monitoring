@@ -16,6 +16,10 @@ function TransactionBar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const { transInfo } = useSelector((state) => state.trans)
+
+    const [addTrans, { isLoading }] = useAddTrans();
+
     const [transData, setTrans ] = useState({
         transactionName: '',
         transactionType: '',
@@ -32,7 +36,7 @@ function TransactionBar() {
 
     }
 
-    const [addTrans, { isLoading }] = useAddTrans()
+
 
     const addHandler = async (e) => {
         try {
@@ -79,14 +83,14 @@ function TransactionBar() {
                         label="Transaction Type"
                         placeholder="Select an Transaction Type"
                         className="max-w-xs"
-                        onSelect={(e) => handleInputTrans(e, 'transactionType')}
+                        onChange={(e) => handleInputTrans(e, 'transactionType')}
                         >
                             <SelectItem key={'Bills'} value={'Bills'}>Bills & Payments</SelectItem>
-                            <SelectItem key={'Bills'} value={'Bills'}>Expenses</SelectItem>
-                            <SelectItem key={'Bills'} value={'Bills'}>Savings</SelectItem>
+                            <SelectItem key={'Expenses'} value={'Expenses'}>Expenses</SelectItem>
+                            <SelectItem key={'Savings'} value={'Savings'}>Savings</SelectItem>
                         </Select>
                         <Input
-                        key={'outside'}
+                        key={'outside2'}
                         type="number"
                         label="Transaction Price"
                         labelPlacement={'outside'}
